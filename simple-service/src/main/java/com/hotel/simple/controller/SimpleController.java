@@ -1,13 +1,13 @@
-package com.hotel.activity.controller;
+package com.hotel.simple.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ActivityController {
+public class SimpleController {
 
-    @GetMapping("/hello")
+    @GetMapping(value = "/hello")
     public String hello(){
-        return "Hi there";
+        return "hi there";
     }
 }
