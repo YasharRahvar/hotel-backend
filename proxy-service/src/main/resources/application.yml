@@ -7,3 +7,11 @@ eureka:
     fetch-registry: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+
+zuul:
+  prefix: /api
+  routes:
+    simple-service:
+      path: /simple/**
+      serviceId: simple-service
+      sensitiveHeaders:

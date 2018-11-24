@@ -1,6 +1,6 @@
 server:
-  port: 5004
+  port: 4000
 
 spring:
   application:
-    name: activity-service
+    name: proxy-service
