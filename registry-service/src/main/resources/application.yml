@@ -11,4 +11,4 @@ eureka:
     fetch-registry: false
 
 logging:
-  file: yashar/registry.log
+  file: hotel/registry-service.log
