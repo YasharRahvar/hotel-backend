@@ -3,5 +3,7 @@ rootProject.name = 'hotel-backend'
 include "simple-service"
 include "registry-service"
 include "proxy-service"
+include "activity-service"
+include "auth-service"
 
 

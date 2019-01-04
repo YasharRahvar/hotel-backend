@@ -1,6 +1,8 @@
 package com.hotel.auth.security;
 
 import com.hotel.auth.model.User;
+import com.hotel.auth.service.UserService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.core.AuthenticationException;
@@ -19,11 +21,12 @@ public class CustomTokenServices extends DefaultTokenServices {
 
     private ClientDetailsService clientDetailsService;
 
+    private static final String JWT_FIELD_USER_DETAILS = "response";
     private static final String JWT_FIELD_USER_ID = "userId";
 
 
-   /* @Autowired
-    private UserService userService;*/
+    @Autowired
+    private UserService userService;
 
     @Override
     public void setClientDetailsService(ClientDetailsService clientDetailsService) {
@@ -37,7 +40,7 @@ public class CustomTokenServices extends DefaultTokenServices {
         if(authentication.getPrincipal() instanceof User) {
             final User user = (User) authentication.getPrincipal();
             authentication.setDetails(createAuthenticationDetails(user));
-            //userService.updateLastLogin(user.getId());
+            userService.updateLastLogin(user.getId());
         }
 
         return super.createAccessToken(authentication);
@@ -49,6 +52,7 @@ public class CustomTokenServices extends DefaultTokenServices {
         if(user != null) {
             accountInfo.put(JWT_FIELD_USER_ID, user.getId());
         }
+
         return accountInfo;
     }
 

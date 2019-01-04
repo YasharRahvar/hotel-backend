@@ -3,6 +3,7 @@ package com.hotel.auth.configuration;
 
 import com.hotel.auth.security.CustomJwtAccessTokenConverter;
 import com.hotel.auth.security.CustomTokenServices;
+import com.hotel.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,8 +45,8 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
-    /*@Autowired
-    private UserService userService;*/
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ClientDetailsService clientDetailsService;
@@ -64,10 +65,26 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .secret("$2a$04$CTmSPMqt4wKOuwgH6DoUFO0bjEgWfeDkbrR6iqqMOCm9i5Z2bhKia")
                 .scopes("client")
                 .and()
+                .withClient("activity-service")
+                .secret("$2a$10$kFkA6nDqYbAhdTCMzfimJuMHGfvAfU/hQnDL8GGpZhbrFiWFyH5fq")
+                .authorizedGrantTypes("client_credentials", "refresh_token")
+                .scopes("service.activity")
+                .and()
+                .inMemory()
+                .withClient("android-app")
+                .authorizedGrantTypes("refresh_token", "password")
+                .secret("$2a$04$CTmSPMqt4wKOuwgH6DoUFO0bjEgWfeDkbrR6iqqMOCm9i5Z2bhKia")
+                .scopes("client")
+                .and()
                 .withClient("ios-app")
                 .authorizedGrantTypes("refresh_token", "password")
                 .secret("$2a$04$CTmSPMqt4wKOuwgH6DoUFO0bjEgWfeDkbrR6iqqMOCm9i5Z2bhKia")
                 .scopes("client")
+                .and()
+                .withClient("buzzsurvey")
+                .secret("$2a$10$Za.wnlhrgsrIXGKqAdFOYu4YPgMcUAW5o6b83TlMPG6Nq8HWU.iOm")
+                .authorizedGrantTypes("client_credentials", "refresh_token")
+                .scopes("api.buzzsurvey.read", "api.buzzsurvey.write", "api.buzzsurvey.delete")
                 .and()
                 .withClient("inventory-service")
                 .secret("$2a$10$Lj4OZEhU9mwxKd.sulXO/OtWRofOLiGsLS4CbY9YS0ouZ0/s1qa16")
@@ -130,8 +147,8 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         endpoints
                 .accessTokenConverter(jwtAccessTokenConverter())
                 .authenticationManager(authenticationManager)
-                .tokenServices(customTokenServices());
-                //.userDetailsService(userService);
+                .tokenServices(customTokenServices())
+                .userDetailsService(userService);
     }
 
     @Bean

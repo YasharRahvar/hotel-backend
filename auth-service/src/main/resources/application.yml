@@ -43,6 +43,3 @@ security:
           2QIDAQAB
           -----END PUBLIC KEY-----
 
-logging:
-  file: hotel/auth-service.log
-
