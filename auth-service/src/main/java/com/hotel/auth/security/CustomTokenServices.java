@@ -1,5 +1,6 @@
 package com.hotel.auth.security;
 
+
 import com.hotel.auth.model.User;
 import com.hotel.auth.service.UserService;
 import lombok.Data;
@@ -24,9 +25,9 @@ public class CustomTokenServices extends DefaultTokenServices {
     private static final String JWT_FIELD_USER_DETAILS = "response";
     private static final String JWT_FIELD_USER_ID = "userId";
 
-
     @Autowired
     private UserService userService;
+
 
     @Override
     public void setClientDetailsService(ClientDetailsService clientDetailsService) {
@@ -49,9 +50,18 @@ public class CustomTokenServices extends DefaultTokenServices {
     private Map<String, Object> createAuthenticationDetails(final User user) {
         final Map<String, Object> accountInfo = new HashMap<>();
 
-        if(user != null) {
-            accountInfo.put(JWT_FIELD_USER_ID, user.getId());
-        }
+        final TokenDetails tokenDetails = new TokenDetails();
+
+        tokenDetails.setUrl("/regular-user");
+
+        final UserData userData = new UserData();
+
+        userData.setUserName(String.format("%s %s", user.getFirstName(), user.getLastName()));
+
+        tokenDetails.setUserData(userData);
+
+        accountInfo.put(JWT_FIELD_USER_ID, user.getId());
+        accountInfo.put(JWT_FIELD_USER_DETAILS, tokenDetails);
 
         return accountInfo;
     }
@@ -69,5 +79,17 @@ public class CustomTokenServices extends DefaultTokenServices {
                 setSupportRefreshToken(true);
             }
         }
+    }
+
+    @Data
+    private static class TokenDetails {
+        private String url;
+        private UserData userData;
+
+    }
+
+    @Data
+    private static class UserData {
+        private String userName;
     }
 }

@@ -1,5 +1,6 @@
 package com.hotel.auth.model;
 
+
 import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
@@ -8,7 +9,8 @@ import java.util.List;
 
 public enum Role implements Serializable, GrantedAuthority {
     ROLE_REGISTERED_USER(1, SecurityConfig.ROLE_REGISTERED_USER, "Registered"),
-    ROLE_ADMIN(2, SecurityConfig.ROLE_ADMIN, "Super");
+    ROLE_COMPANY_USER(2, SecurityConfig.ROLE_COMPANY_USER, "Company"),
+    ROLE_SUPER_USER(3, SecurityConfig.ROLE_SUPER_USER, "Super");
 
     private long id;
     private String name;
@@ -26,6 +28,7 @@ public enum Role implements Serializable, GrantedAuthority {
                 return role;
             }
         }
+
         return null;
     }
 
@@ -49,6 +52,4 @@ public enum Role implements Serializable, GrantedAuthority {
     public String getAuthority() {
         return this.toString();
     }
-
 }
-

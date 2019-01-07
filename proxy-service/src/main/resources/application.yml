@@ -23,7 +23,3 @@ zuul:
       path: /activity/**
       serviceId: activity-service
       sensitiveHeaders:
-
-
-logging:
-  file: hotel/proxy-service.log

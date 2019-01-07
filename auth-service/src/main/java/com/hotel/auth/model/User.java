@@ -10,10 +10,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
-@Data
+
 @Entity
+@Data
+@Table(name ="user")
 @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
 
@@ -21,70 +25,40 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @JsonIgnore
-    private String password;
+    protected Long id;
 
     @Column(nullable = false, unique = true)
     private String username;
 
+    @JsonIgnore
+    @Column
+    private String password;
+
+    @Column
+    private String title;
+
+    @Column(name = "firstName")
     private String firstName;
+
+    @Column(name = "lastName")
     private String lastName;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @Transient
     private Role role;
+
+    @Column(nullable = false, updatable = false)
     @CreatedDate
-    @Column(updatable = false)
     private ZonedDateTime createdOn;
+
+    @Column(nullable = false)
     @LastModifiedDate
     private ZonedDateTime updatedOn;
+
+    @JsonIgnore
     private ZonedDateTime deletedOn;
-
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-
-    @Override
-    public String getUsername() {
-
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-
-        return true;
-    }
 
     @Access(AccessType.PROPERTY)
     @Column(name = "role_id", nullable = true)
@@ -92,10 +66,47 @@ public class User implements UserDetails {
         return role!= null ? role.getId() : null;
     }
 
-
     public void setRoleId(Long roleId) {
         if (roleId != null) {
             this.role = Role.getRole(roleId);
         }
     }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        return new HashSet<>(Arrays.asList(this.role));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }
