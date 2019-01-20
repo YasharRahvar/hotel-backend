@@ -15,3 +15,11 @@ zuul:
       path: /simple/**
       serviceId: simple-service
       sensitiveHeaders:
+    auth-service-uaa:
+      path: /uaa/**
+      serviceId: auth-service
+      sensitiveHeaders:
+    activity-service:
+      path: /activity/**
+      serviceId: activity-service
+      sensitiveHeaders:
