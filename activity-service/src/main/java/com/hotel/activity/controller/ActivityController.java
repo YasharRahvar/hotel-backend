@@ -22,7 +22,7 @@ public class ActivityController {
     }
 
     @PostMapping("/activity")
-    @PreAuthorize("hasRole('ROLE_COMPANY_USER')")
+    @PreAuthorize("hasRole('ROLE_SUPER_USER')")
     public ActivityDto createActivity(@RequestBody ActivityDto activityDto) {
         log.info("this is a activityDto " + activityDto);
         return activityMapper.mapToActivityDto(activityService.createActivity(activityMapper.mapToActivity(activityDto)));
