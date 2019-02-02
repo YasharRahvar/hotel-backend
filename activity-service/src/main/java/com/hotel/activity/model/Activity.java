@@ -17,7 +17,7 @@ public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long userId;
+    private Long hotelId;
     private String name;
     private String description;
     @CreatedDate

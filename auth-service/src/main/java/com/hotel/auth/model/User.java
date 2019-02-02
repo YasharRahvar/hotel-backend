@@ -31,18 +31,17 @@ public class User implements UserDetails {
     private String username;
 
     @JsonIgnore
-    @Column
     private String password;
 
-    @Column
     private String title;
 
-    @Column(name = "firstName")
     private String firstName;
 
-    @Column(name = "lastName")
     private String lastName;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
     @Column(nullable = false, unique = true)
     private String email;
 

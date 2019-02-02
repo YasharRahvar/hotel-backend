@@ -9,4 +9,6 @@ public class CreateUserDto {
 
     @NotEmpty
     private String email;
+    @NotEmpty
+    private String hotelName;
 }

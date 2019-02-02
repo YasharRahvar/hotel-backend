@@ -24,6 +24,7 @@ public class CustomJwtAccessTokenConverter extends JwtAccessTokenConverter {
         Map<String, Object> details = new HashMap();
         this.addDetails(map, details, "userId");
         this.addDetails(map, details, "user_name");
+        this.addDetails(map, details, "hotelId");
         authentication.setDetails(details);
         return authentication;
     }

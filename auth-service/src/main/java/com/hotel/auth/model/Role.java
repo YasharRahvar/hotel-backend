@@ -8,9 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Role implements Serializable, GrantedAuthority {
-    ROLE_REGISTERED_USER(1, SecurityConfig.ROLE_REGISTERED_USER, "Registered"),
-    ROLE_COMPANY_USER(2, SecurityConfig.ROLE_COMPANY_USER, "Company"),
-    ROLE_SUPER_USER(3, SecurityConfig.ROLE_SUPER_USER, "Super");
+    ROLE_HOTEL_CUSTOMER(1, SecurityConfig.ROLE_HOTEL_CUSTOMER, "Customer"),
+    ROLE_HOTEL_EMPLOYEE(2, SecurityConfig.ROLE_HOTEL_EMPLOYEE, "Employee"),
+    ROLE_HOTEL_ADMIN(3, SecurityConfig.ROLE_HOTEL_ADMIN, "Admin"),
+    ROLE_SUPER_ADMIN(4, SecurityConfig.ROLE_SUPER_ADMIN, "Super-Admin");
 
     private long id;
     private String name;

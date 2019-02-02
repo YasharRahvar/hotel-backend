@@ -19,7 +19,11 @@ zuul:
       path: /uaa/**
       serviceId: auth-service
       sensitiveHeaders:
-    activity-service:
-      path: /activity/**
-      serviceId: activity-service
+    product-service:
+      path: /product/**
+      serviceId: product-service
+      sensitiveHeaders:
+    purchasing-service:
+      path: /purchasing/**
+      serviceId: purchasing-service
       sensitiveHeaders:

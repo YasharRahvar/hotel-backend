@@ -24,7 +24,7 @@ security:
   token:
     validity:
       refresh: 10080
-      access: 120
+      access: 620
   oauth2:
     client:
       accessTokenUri: http://localhost:5000/api/uaa/oauth/token
