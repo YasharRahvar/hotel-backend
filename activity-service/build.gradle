@@ -54,6 +54,7 @@ dependencyManagement {
 }
 
 dependencies {
+    compile files('libs/hotel-security-utils-1.0.0.jar')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-web')
@@ -61,7 +62,7 @@ dependencies {
     implementation('org.flywaydb:flyway-core')
     implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.3.0'
-    implementation('org.mapstruct:mapstruct-jdk8:1.2.0.Final', 'org.projectlombok:lombok:1.16.20')
+    compileOnly('org.mapstruct:mapstruct-jdk8:1.2.0.Final', 'org.projectlombok:lombok:1.16.20')
     runtimeOnly('mysql:mysql-connector-java')
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.2.0.Final', 'org.projectlombok:lombok:1.16.20'
     testImplementation('org.springframework.boot:spring-boot-starter-test')

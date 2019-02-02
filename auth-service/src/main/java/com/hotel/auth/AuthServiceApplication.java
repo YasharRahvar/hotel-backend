@@ -1,5 +1,6 @@
 package com.hotel.auth;
 
+import com.hotel.auth.mapper.HotelMapper;
 import com.hotel.auth.mapper.UserMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.boot.SpringApplication;
@@ -25,8 +26,14 @@ public class AuthServiceApplication {
 
     @Bean
     @Primary
-    public UserMapper mapper() {
+    public UserMapper userMapper() {
         return Mappers.getMapper(UserMapper.class);
+    }
+
+    @Bean
+    @Primary
+    public HotelMapper hotelMapper() {
+        return Mappers.getMapper(HotelMapper.class);
     }
 
     @Bean

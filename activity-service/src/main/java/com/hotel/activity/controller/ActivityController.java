@@ -6,7 +6,11 @@ import com.hotel.activity.service.ActivityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import static com.hotel.activity.security.SecurityUtil.getHotelId;
+
 
 @RestController
 @Slf4j
@@ -22,10 +26,11 @@ public class ActivityController {
     }
 
     @PostMapping("/activity")
-    @PreAuthorize("hasRole('ROLE_SUPER_USER')")
-    public ActivityDto createActivity(@RequestBody ActivityDto activityDto) {
+    //@PreAuthorize("hasRole('ROLE_SUPER_USER')")
+    public ActivityDto createActivity(@RequestBody ActivityDto activityDto, final OAuth2Authentication authentication) {
         log.info("this is a activityDto " + activityDto);
-        return activityMapper.mapToActivityDto(activityService.createActivity(activityMapper.mapToActivity(activityDto)));
+        return activityMapper.mapToActivityDto(
+                activityService.createActivity(activityDto, getHotelId(authentication)));
     }
 
     @DeleteMapping("/activity/{activityId}")

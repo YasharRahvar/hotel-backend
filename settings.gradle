@@ -5,5 +5,7 @@ include "registry-service"
 include "proxy-service"
 include "activity-service"
 include "auth-service"
+include "product-service"
+include "purchasing-service"
 
 

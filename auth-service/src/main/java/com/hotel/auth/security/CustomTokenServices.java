@@ -24,6 +24,7 @@ public class CustomTokenServices extends DefaultTokenServices {
 
     private static final String JWT_FIELD_USER_DETAILS = "response";
     private static final String JWT_FIELD_USER_ID = "userId";
+    private static final String JWT_FIELD_HOTEL_ID = "hotelId";
 
     @Autowired
     private UserService userService;
@@ -52,7 +53,7 @@ public class CustomTokenServices extends DefaultTokenServices {
 
         final TokenDetails tokenDetails = new TokenDetails();
 
-        tokenDetails.setUrl("/regular-user");
+        //tokenDetails.setUrl("/regular-user");
 
         final UserData userData = new UserData();
 
@@ -62,6 +63,7 @@ public class CustomTokenServices extends DefaultTokenServices {
 
         accountInfo.put(JWT_FIELD_USER_ID, user.getId());
         accountInfo.put(JWT_FIELD_USER_DETAILS, tokenDetails);
+        accountInfo.put(JWT_FIELD_HOTEL_ID, user.getHotel().getId());
 
         return accountInfo;
     }

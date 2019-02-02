@@ -5,6 +5,8 @@ package com.hotel.auth.security;
  */
 public final class SecurityConstants {
 
+
+    public static final String HOTEL_ID = "hotelId";
     /**
      * User id key.
      */

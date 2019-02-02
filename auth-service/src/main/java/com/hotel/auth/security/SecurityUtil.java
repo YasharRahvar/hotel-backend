@@ -21,6 +21,16 @@ public final class SecurityUtil {
      */
     private SecurityUtil() { }
 
+    /**
+     * Method that returns hotel id, fetching it from oauth2 authentication.
+     * @param authentication OAuth2 authentication instance
+     * @return hotel id value
+     */
+    public static final Long getHotelId(OAuth2Authentication authentication) {
+        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails)authentication.getDetails();
+        Map<String, Object> decodedDetails = (Map<String, Object>) details.getDecodedDetails();
+        return Long.valueOf((Integer)decodedDetails.getOrDefault(HOTEL_ID, -1));
+    }
 
     /**
      * Method that return a user id, fetching it from oauth2 authentication.

@@ -1,8 +1,12 @@
 package com.hotel.auth.service;
 
 
+import com.hotel.auth.dto.CreateUserDto;
 import com.hotel.auth.dto.PatchUserDto;
+import com.hotel.auth.dto.UserDto;
 import com.hotel.auth.exception.EmailAlreadyExistException;
+import com.hotel.auth.exception.HotelNotFoundException;
+import com.hotel.auth.model.Hotel;
 import com.hotel.auth.model.Role;
 import com.hotel.auth.model.User;
 import com.hotel.auth.repository.UserRepository;
@@ -15,15 +19,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
+    private HotelService hotelService;
 
-    public UserService(UserRepository userRepository) {
+
+    public UserService(UserRepository userRepository, HotelService hotelService) {
         this.userRepository = userRepository;
+        this.hotelService = hotelService;
     }
 
     @Override
@@ -57,12 +65,16 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User createUser(User user) {
+    public User createUserEmployee(Long hotelId, CreateUserDto createUserDto) {
+        User user = new User();
+        Optional<Hotel> hotel = Optional.of(hotelService.findHotelById(hotelId).orElseThrow(() -> new HotelNotFoundException()));
+        user.setEmail(createUserDto.getEmail());
+        user.setHotel(hotel.get());
         userRepository.findByEmail(user.getEmail()).ifPresent(dbUser -> {
             throw new EmailAlreadyExistException("user.email.already.exist");
         });
 
-        user.setRole(Role.ROLE_REGISTERED_USER);
+        user.setRole(Role.ROLE_HOTEL_EMPLOYEE);
         user.setUsername(user.getEmail());
         return userRepository.save(user);
     }

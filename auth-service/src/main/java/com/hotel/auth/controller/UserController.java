@@ -6,11 +6,13 @@ import com.hotel.auth.dto.UserDto;
 import com.hotel.auth.dto.UserIdDto;
 import com.hotel.auth.mapper.UserMapper;
 import com.hotel.auth.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import static com.hotel.auth.security.SecurityUtil.getHotelId;
 import static com.hotel.auth.security.SecurityUtil.getUserId;
 
 
@@ -64,9 +66,12 @@ public class UserController {
         return userMapper.mapToUserDto(userService.patchUser(patchUserDto, getUserId(authentication)));
     }
 
-    @PostMapping(value = "/user")
+    @PostMapping(value = "/user/employee")
     @PreAuthorize("#oauth2.hasScope('client')")
-    public CreateUserDto createUser(@RequestBody CreateUserDto createUserDto) {
-        return userMapper.mapToCreateUserDto(userService.createUser(userMapper.mapToUser(createUserDto)));
+    @ResponseStatus(HttpStatus.OK)
+    public void createUserEmployee(@RequestBody CreateUserDto createUserDto, OAuth2Authentication oAuth2Authentication) {
+        userService.createUserEmployee(getHotelId(oAuth2Authentication), createUserDto);
+
+        //return userMapper.mapToCreateUserDto(userService.createUser(userMapper.mapToUser(createUserDto)));
     }
 }

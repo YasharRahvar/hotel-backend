@@ -1,6 +1,6 @@
-/* create table user */
+/* create table activity */
 CREATE TABLE `activity` (`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `user_id` BIGINT(20),
+  `hotel_id` BIGINT(20) NOT NULL,
   `name` VARCHAR (250),
   `description` VARCHAR (250),
   `created_on` DATETIME,
